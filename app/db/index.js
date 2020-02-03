@@ -16,16 +16,30 @@ const chatUser = new Mongoose.Schema({
     profilePic: String
 });
 
-// const rooms = new Mongoose.Schema({
-//   roomId: String,
-//   name: String
-// })
+//Create user Schema
+const UserSchema = Mongoose.Schema({
+  username: {
+    type: String,
+    required: true
+  },
+  email: {
+    type: String,
+    required: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now()
+  }
+});
 
 let userModel = Mongoose.model('chatUser', chatUser);
-// let roomModel = Mongoose.model('rooms', rooms);
-
+let userSchema = Mongoose.model('UserSchema', UserSchema)
 module.exports = {
     Mongoose,
     userModel,
-    // roomModel
+    userSchema
 }
