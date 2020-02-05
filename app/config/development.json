@@ -1,23 +1,23 @@
 {
-    "host": "http://localhost:3000",
+    "host": "https://d1a5c3c4.ngrok.io",
     "dataBaseUrl": "mongodb+srv://newchat:fabulous26@chuksapp-gdlkb.mongodb.net/test?retryWrites=true&w=majority",
     "dataBaseKey": "classified",
     "fb": {
         "clientID": "1348475588647023",
         "clientSecret": "5d15e96e09bccfb141874e5c03fdb33c",
-        "callbackURL": "https://ca464a9a.ngrok.io/auth/facebook/callback",
+        "callbackURL": "https://d1a5c3c4.ngrok.io/auth/facebook/callback",
         "profileFields": ["id", "displayName", "photos"]
     },
     "twitter": {
         "consumerKey": "EHs2f512hEESadj1XF1X9RSlO",
         "consumerSecret": "JRM37xlkndLNUM0syskC9sAWUQmiYDTuX9o9qkeKm5csuKFwlG",
-        "callbackURL": "https://ca464a9a.ngrok.io/auth/twitter/callback",
+        "callbackURL": "https://d1a5c3c4.ngrok.io/auth/twitter/callback",
         "profileFields": ["id", "displayName", "photos"]
     },
     "google": {
-        "clientID":"59729795205-8gv68sfo00mp3r7kkb0eqlk9c9cmiea9.apps.googleusercontent.com",
-        "clientSecret":"0N8AamcuXjZxacNQYs72YRjU",
-        "callbackURL": "https://ca464a9a.ngrok.io/auth/google/callback",
+        "clientID":"59729795205-luilvsnq0gkatcopvvrl7fr3jomglj94.apps.googleusercontent.com",
+        "clientSecret":"Z37nDYPq0lQfWe0AVty-r5du",
+        "callbackURL": "https://d1a5c3c4.ngrok.io/auth/google/callback",
         "profileFields": ["id", "displayName", "photos"]
     }
 }

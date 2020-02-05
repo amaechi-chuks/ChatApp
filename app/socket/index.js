@@ -18,10 +18,8 @@ module.exports = (io, app) => {
           roomID: ultility.generateRoomId(),
           users: []
         });
-
         // //Save a room to dataBase
         // ultility.createNewRoom(newRooms);
-
         //Emit the updated list
         socket.emit("chatRoomsList", JSON.stringify(allrooms));
 
@@ -34,7 +32,6 @@ module.exports = (io, app) => {
     //Join a chatroom
     socket.on('join', data => {
         let usersList = ultility.addUserToRoom(allrooms, data, socket);
-
         // Update the list of active users as shown on the chatroom page
         socket.broadcast.to(data.roomID).emit('updateUsersList', JSON.stringify(usersList.users));
         socket.emit('updateUsersList', JSON.stringify(usersList.users));

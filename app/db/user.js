@@ -1,8 +1,6 @@
 const config = require("../config");
 const Mongoose = require("mongoose");
 
-
-
 Mongoose.connect(config.dataBaseUrl, {useNewUrlParser: true, useUnifiedTopology: true});
 
 //log an error if the connection fails
@@ -10,13 +8,6 @@ Mongoose.connection.on("error", error => {
   console.log(error);
 });
 
-const chatUser = new Mongoose.Schema({
-    profileId: String,
-    fullName: String,
-    profilePic: String
-});
-
-//Create user Schema
 const UserSchema = Mongoose.Schema({
   username: {
     type: String,
@@ -36,8 +27,5 @@ const UserSchema = Mongoose.Schema({
   }
 });
 
-let userModel = Mongoose.model('chatUser', chatUser);
-module.exports = {
-    Mongoose,
-    userModel,
-}
+// export model user with UserSchema
+module.exports = Mongoose.model("user", UserSchema);

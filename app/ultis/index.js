@@ -117,39 +117,44 @@ let FindRoomByID = (allrooms, roomID) => {
 
 //Add a user to a chatRoom
 let addUserToRoom = (allrooms, data, socket) => {
-  //Get the room object
-  let getRoom = FindRoomByID(allrooms, data.roomID); 
-  if (getRoom) {
-    //Get the active user ID (object from session)
+	// Get the room object
+  let getRoom = FindRoomByID(allrooms, data.roomID);
+  console.log(getRoom);
+	if(getRoom !== undefined) {
+    console.log(socket.request.session, 'store');
+    // Get the active user's ID (ObjectID as used in session)
     let userID = socket.request.session.passport.user;
-    //check to see if the user already exists in the chatroom
-    let checkkUser = getRoom.users.findIndex((element, index, array) => {
-      if(element.userID === userID) {
-        return true;
-      }else{
-        return false;
-      }
-    });
+    //console.log(userID, 'user')
+    
+		// Check to see if this user already exists in the chatroom
+		let checkUser = getRoom.users.findIndex((element, index, array) => {
+			if(element.userID === userID) {
+				return true;
+			} else {
+				return false;
+			}
+		});
 
-    //If the user is already in the room, remove him first
-    if(checkkUser > -1){
-      getRoom.users.splice(checkkUser, 1);
-    }
-    //Push the user into the user array
-    getRoom.users.push({
-      socketID: socket.id,
-      userID,
-      user: data.user,
-      userPic: data.userPic
-    });
+		// If the user is already present in the room, remove him first
+		if(checkUser > -1) {
+			getRoom.users.splice(checkUser, 1);
+		}
 
-    //join the room channel
-    socket.join(data.roomID);
+		// Push the user into the room's users array
+		getRoom.users.push({
+			socketID: socket.id,
+			userID,
+			user: data.user,
+			userPic: data.userPic
+		});
 
-    //Return th updated room object
-    return getRoom
-  }
-};
+		// Join the room channel
+		socket.join(data.roomID);
+
+		// Return the updated room object
+		return getRoom;
+	}
+}
 
 module.exports = {
   route,

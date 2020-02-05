@@ -14,11 +14,11 @@ if(process.env.NODE_ENV === 'production'){
             mongooseConnection: db.mongoose.connection
         })
     })
-}else{
+}
+else{
     //load development session storage
     module.exports = session({
         secret: config.dataBaseKey,
-        proxy: true,
         resave: false,
         saveUninitialized: true
     })
