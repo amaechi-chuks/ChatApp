@@ -117,44 +117,61 @@ let FindRoomByID = (allrooms, roomID) => {
 
 //Add a user to a chatRoom
 let addUserToRoom = (allrooms, data, socket) => {
-	// Get the room object
+  // Get the room object
   let getRoom = FindRoomByID(allrooms, data.roomID);
-  console.log(getRoom);
-	if(getRoom !== undefined) {
-    console.log(socket.request.session, 'store');
+  if (getRoom !== undefined) {
     // Get the active user's ID (ObjectID as used in session)
     let userID = socket.request.session.passport.user;
     //console.log(userID, 'user')
-    
-		// Check to see if this user already exists in the chatroom
-		let checkUser = getRoom.users.findIndex((element, index, array) => {
-			if(element.userID === userID) {
-				return true;
-			} else {
-				return false;
-			}
-		});
 
-		// If the user is already present in the room, remove him first
-		if(checkUser > -1) {
-			getRoom.users.splice(checkUser, 1);
-		}
+    // Check to see if this user already exists in the chatroom
+    let checkUser = getRoom.users.findIndex((element, index, array) => {
+      if (element.userID === userID) {
+        return true;
+      } else {
+        return false;
+      }
+    });
 
-		// Push the user into the room's users array
-		getRoom.users.push({
-			socketID: socket.id,
-			userID,
-			user: data.user,
-			userPic: data.userPic
-		});
+    // If the user is already present in the room, remove him first
+    if (checkUser > -1) {
+      getRoom.users.splice(checkUser, 1);
+    }
 
-		// Join the room channel
-		socket.join(data.roomID);
+    // Push the user into the room's users array
+    getRoom.users.push({
+      socketID: socket.id,
+      userID,
+      user: data.user,
+      userPic: data.userPic
+    });
 
-		// Return the updated room object
-		return getRoom;
-	}
-}
+    // Join the room channel
+    socket.join(data.roomID);
+
+    // Return the updated room object
+    return getRoom;
+  }
+};
+
+let removeUserFromRoom = (allrooms, socket) => {
+  //find user
+  for (let room of allrooms) {
+    let findUser = room.users.findIndex((element, index, array) => {
+      if (element.socketID === socket.id) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    //Purge out user
+    if (findUser > -1) {
+      socket.leave(room.roomID);
+      room.users.splice(findUser, 1);
+      return room;
+    }
+  }
+};
 
 module.exports = {
   route,
@@ -166,4 +183,5 @@ module.exports = {
   generateRoomId,
   FindRoomByID,
   addUserToRoom,
+  removeUserFromRoom
 };

@@ -9,7 +9,6 @@ const loginForm = document.querySelector('#login-form');
  * @param {object} e - The event parameter
  */
 const authSignUp = () => {
-    console.log(window.localStorage, 'local')
   if (window.localStorage) {
     window.location.replace('rooms');
   } else {

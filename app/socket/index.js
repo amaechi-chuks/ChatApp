@@ -35,7 +35,16 @@ module.exports = (io, app) => {
         // Update the list of active users as shown on the chatroom page
         socket.broadcast.to(data.roomID).emit('updateUsersList', JSON.stringify(usersList.users));
         socket.emit('updateUsersList', JSON.stringify(usersList.users));
-    })
+    });
+    // Disconnect user from rooms
+    socket.on('disconnect', ()=>{
+      let room = ultility.removeUserFromRoom(allrooms, socket);
+      socket.broadcast.to(room.roomID).emit('updateUsersList', JSON.stringify(room.users))
+    });
+    socket.on('message', data =>{
+     socket.to(data.roomID).emit('inMessage', JSON.stringify(data));
+    });
+    
 });
 };
 
