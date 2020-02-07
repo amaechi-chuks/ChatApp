@@ -12,19 +12,19 @@ if (process.env.NODE_ENV === "production") {
     fb: {
         clientID: process.env.fbClientID,
         clientSecret: process.env.fbClientSecret,
-        callbackURL: process.env.dataBaseUrl + "auth/facebook/callback",
+        callbackURL : `https://${process.env.host}/auth/facebook/callback`,
         profileFields: ["id", "displayName", "photos"]
     },
     twitter: {
       consumerKey: process.env.twConsumerKey,
       consumerSecret: process.env.twConsumerSecret,
-      callbackURL: process.env.dataBaseUrl + "auth/twitter/callback",
+      callbackURL : `https://${process.env.host}/auth/twitter/callback`,
       profileFields: ["id", "displayName", "photos"]
     },
     google: {
-      clientID: process.env.ggClientID,
-      clientSecret: process.env.ggClientSecret,
-      callbackURL: process.env.dataBaseUrl + "auth/google/callback",
+      clientID: process.env.googleClientID,
+      clientSecret: process.env.googleClientSecret,
+      callbackURL : `https://${process.env.host}/auth/google/callback`,
       profileFields: ["id", "displayName", "photos"]
     },
     redis: {
