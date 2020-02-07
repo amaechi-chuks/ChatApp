@@ -8,6 +8,7 @@ const config = require("../config");
 const ultility = require("../ultis");
 const User = require("../db/user");
 const auth = require("../auth/user");
+const logger = require('../logger')
 
 module.exports = () => {
   let routes = {
@@ -140,7 +141,7 @@ module.exports = () => {
               }
             );
           } catch (err) {
-            console.log(err.message);
+            logger.log(err.message);
             res.status(500).send("/login");
           }
           

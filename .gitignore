@@ -1,2 +1,8 @@
+#Ds Store
 .DS_Store
+#Node Dependency
 node_modules/
+#Debug error
+chatAppErrorLog.log
+#Development config file
+app/config/development.json

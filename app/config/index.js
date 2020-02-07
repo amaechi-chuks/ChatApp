@@ -2,6 +2,9 @@
 
 if (process.env.NODE_ENV === "production") {
   //offer production stage environment variables
+  let redisURI = require('url').parse(process.env.REDIS_URL);
+  let redisPassword = redisURI.auth.split(':')[1]
+
   module.exports = {
     host: process.env.host || "",
     dataBaseUrl: process.env.dataBaseUrl,
@@ -23,6 +26,11 @@ if (process.env.NODE_ENV === "production") {
       clientSecret: process.env.clientID,
       callbackURL: process.env.dataBaseUrl + "auth/google/callback",
       profileFields: ["id", "displayName", "photos"]
+    },
+    redis: {
+      host: redisURI.hostname,
+      port: redisURI.port,
+      password: redisPassword
     }
    
   };

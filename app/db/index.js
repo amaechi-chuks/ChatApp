@@ -1,5 +1,6 @@
 const config = require("../config");
 const Mongoose = require("mongoose");
+const logger = require('../logger');
 
 
 
@@ -7,7 +8,7 @@ Mongoose.connect(config.dataBaseUrl, {useNewUrlParser: true, useUnifiedTopology:
 
 //log an error if the connection fails
 Mongoose.connection.on("error", error => {
-  console.log(error);
+ logger.log(`Mongoose Error Conecting to Db: ${error}`)
 });
 
 const chatUser = new Mongoose.Schema({

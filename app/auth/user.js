@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const logger = require('../logger')
 
 module.exports = function(req, res, next) {
   const token = req.header("token");
@@ -9,7 +10,7 @@ module.exports = function(req, res, next) {
     req.user = decoded.user;
     next();
   } catch (e) {
-    console.error(e);
+    logger.error(e);
     res.status(500).send({ message: "Invalid Token" });
   }
 };

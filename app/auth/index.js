@@ -4,6 +4,7 @@ const ultility = require("../ultis");
 const FacebookStrategy = require("passport-facebook").Strategy;
 const TwitterStrategy = require("passport-twitter").Strategy;
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const logger = require('../logger')
 
 module.exports = () => {
     passport.serializeUser((user, done)=>{
@@ -13,7 +14,7 @@ module.exports = () => {
         //Find the user using the _id
         ultility.findById(id)
         .then(user => done(null, user))
-        .catch(error => console.log('Error When deserializing user data'));
+        .catch(error => logger.log(`Error When deserializing user data ${error}`));
     })
 
     let authProcess = (accessToken, refreshToken, profile, done) => {
@@ -28,7 +29,7 @@ module.exports = () => {
                 //create a new user ans return
                 ultility.createNewUser(profile)
                 .then(newChatUser => done(null, newChatUser))
-                .catch(error => console.log('Error when creating new Users'));
+                .catch(error => logger.log(`Error when creating new Users${error}`));
             }
         })
         

@@ -44,7 +44,16 @@ module.exports = (io, app) => {
     socket.on('message', data =>{
      socket.to(data.roomID).emit('inMessage', JSON.stringify(data));
     });
-    
+    socket.on('typing', (data)=>{
+      if(data.typing==true){
+        socket.broadcast.to(data.roomID).emit('display', JSON.stringify(data));
+        socket.emit('display', JSON.stringify(data))
+      }
+      else{
+        socket.emit('display', JSON.stringify(data))
+      }
+        
+    })
 });
 };
 

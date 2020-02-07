@@ -1,11 +1,12 @@
 const config = require("../config");
 const Mongoose = require("mongoose");
+const logger = require('../logger')
 
 Mongoose.connect(config.dataBaseUrl, {useNewUrlParser: true, useUnifiedTopology: true});
 
 //log an error if the connection fails
 Mongoose.connection.on("error", error => {
-  console.log(error);
+  logger.log(`User Error Connecting to Mongoose ${error}`);
 });
 
 const UserSchema = Mongoose.Schema({
