@@ -22,8 +22,8 @@ if (process.env.NODE_ENV === "production") {
       profileFields: ["id", "displayName", "photos"]
     },
     google: {
-      clientID: process.env.clientID,
-      clientSecret: process.env.clientID,
+      clientID: process.env.ggClientID,
+      clientSecret: process.env.ggClientSecret,
       callbackURL: process.env.dataBaseUrl + "auth/google/callback",
       profileFields: ["id", "displayName", "photos"]
     },
@@ -36,5 +36,5 @@ if (process.env.NODE_ENV === "production") {
   };
 } else {
   //load development setting data
-  module.exports = require("./development.json");
+  module.exports = require("../development.json");
 }

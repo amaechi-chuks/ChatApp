@@ -4,7 +4,7 @@
   "description": "A chat App that enables users to create a chat room and have fun",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon node server.js"
+    "start": "node server.js"
   },
   "author": "Amaechi-Chuks",
   "license": "MIT",

@@ -5,4 +5,4 @@ node_modules/
 #Debug error
 chatAppErrorLog.log
 #Development config file
-app/config/development.json
+app/development.json
