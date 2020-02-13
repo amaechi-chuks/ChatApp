@@ -15,13 +15,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <script src="/js/jquery-2.1.4.min.js"></script>
     <link rel="stylesheet" href="/css/signupStyles.css" />
-    <script>
-       $(()=>{
-           $('#register').on('click', ()=>{
-              console.log('click me')
-           })
-       })
-    </script>
   </head>
   <body>
     <div class="login-wrap">
@@ -39,7 +32,7 @@
           class="tab"
           >Sign Up</label
         >
-        <div class="login-form">
+        <div class="login-form" id="mainDiv">
           <div class="sign-in-htm">
             <div class="group">
               <label for="user" class="label">Username</label>
@@ -78,7 +71,7 @@
             </ul>
             <div class="hr"></div>
           </div>
-          <div class="sign-up-htm" id="signup" method="post">
+          <form class="sign-up-htm" id="signup">
             <div class="group">
               <label for="user" class="label">Username</label>
               <input id="username" type="text" class="input" />
@@ -92,15 +85,11 @@
                 data-type="password"
               />
             </div>
-            <!-- <div class="group">
-                            <label for="pass" class="label">Confirm Password</label>
-                            <input id="pass" type="password" class="input" data-type="password">
-                        </div> -->
             <div class="group">
               <label for="pass" class="label">Email Address</label>
-              <input id="email" type="text" class="input" />
+              <input id="email" type="email" class="input" />
             </div>
-            <div class="group">
+            <div class="group" id="registerDiv">
               <input
                 type="submit"
                 id="register"
@@ -108,6 +97,7 @@
                 value="Sign Up"
               />
             </div>
+
             <ul id="socials">
               <li class="facebook">
                 <a href="/auth/Facebook"
@@ -125,7 +115,7 @@
             <div class="foot-lnk">
               <a> <label for="tab-1">Already Member? Sign In</label></a>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </div>

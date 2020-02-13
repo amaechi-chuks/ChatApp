@@ -122,7 +122,6 @@ let addUserToRoom = (allrooms, data, socket) => {
   if (getRoom !== undefined) {
     // Get the active user's ID (ObjectID as used in session)
     let userID = socket.request.session.passport.user;
-    //console.log(userID, 'user')
 
     // Check to see if this user already exists in the chatroom
     let checkUser = getRoom.users.findIndex((element, index, array) => {

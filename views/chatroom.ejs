@@ -17,13 +17,13 @@
         let roomID = '<%= roomID %>';
         let user = '<%= user.fullName %>';
         let userPic = '<%= user.profilePic %>';
-        let chatUsers = $('.chatUsers')
+        let chatUsers = $('.chatUsers');
         let chatInput = $("input[name ='userInput']");
         let chatMessageDiv = $('.chatMessages');
         let fileUpload = $('#uploadFile');
         let userIsTyping = $('#typing');
         var typing=false;
-        var timeout= '';
+        var timeout = undefined;
 
         socket.on('connect', () => {
           socket.emit('join', {
@@ -43,11 +43,12 @@
         };
 
         let updateMessage =(userPic, message) => {
+          $('.chatMsgtyp').remove();
           let template = `<div class="chatBlock">
                 <div class="userPic"><img src="${userPic}"/></div>
                 <div class="chatMsg">${message}</div>
               </div>`;
-              $(template).hide().prependTo(chatMessageDiv).slideDown(200);
+              $(template).hide().appendTo(chatMessageDiv).slideDown(200);
         }
 
         socket.on('updateUsersList', data => {
@@ -56,9 +57,8 @@
           for(let user of parsedData) {
             usersListData += userList(user);
           }
-          chatUsers.html('').html(usersListData)
+          chatUsers.html('').html(usersListData);
         });
-
         chatInput.on('keyup', function(event){
           event.preventDefault();
           let messageToDisplay = $(this);
@@ -72,7 +72,7 @@
             });
             // Update the local feed
             updateMessage(userPic, messageToDisplay.val());
-            messageToDisplay.val('')
+            messageToDisplay.val('');
           }
         });
 
@@ -81,6 +81,7 @@
           updateMessage(parsedData.userPic, parsedData.message);
         });
 
+        //Upload a picture via cloudinary
         fileUpload.on('click', ()=>{
           cloudinary.openUploadWidget({
            cloud_name: 'duzpmyphv',
@@ -102,33 +103,49 @@
             }
           });
         });
-        function typingTimeout(){
-          typing=false
-          socket.emit('typing', {user, typing:false})
-        }
         $('#message-box').keypress((e)=>{
-        if(e.which!==13){
-          typing=true
-          socket.emit('typing', {user, typing:true})
-          clearTimeout(timeout)
-          timeout=setTimeout(typingTimeout, 3000);
-          typingTimeout()
+          if(e.which !== 13){
+            typing=true
+            socket.emit('typing', { user, typing });
+            clearTimeout(timeout);
+            timeout=setTimeout(typingTimeout, 3000);
         }else{
           clearTimeout(timeout)
           typingTimeout()
         }
       })
-
+      
       //display user is typing......
       socket.on('display', (data)=>{
-        if(data.includes(typing === true)){
-          $('p').html(`${user} is typing.......`)
+        if(data.typing) {
+          $('.typing').text(`${data.user} is typing.......`);
+        }else{
+         $('.typing').text("");
         }
-        else{
-          console.log('nooooo');
-        }
+    })
+   socket.on('displays', data =>{
+     if(data.user){
+      let template = `<div id="joined">${data.user} just joined</div>`;
+      $(template).hide().appendTo('.chatUsers').slideDown(200);
+       setTimeout(()=>{
+        $('#joined').remove();
+      },3000)
+     }
+   });
+   socket.on('userLeft', data =>{
+     if(data.user){
+      let template = `<div id="joined">${data.user} just left</div>`;
+      $(template).hide().appendTo('.chatUsers').slideDown(200);
+       setTimeout(()=>{
+        $('#joined').remove();
+      },3000)
+     }
+   })
 
-      })
+      function typingTimeout(){
+        typing=false
+        socket.emit('typing', { user, typing });
+    }
       });
     </script>
   </head>
@@ -149,10 +166,11 @@
         <div class="chatListDiv">
           <div class="chatMessagesPanel">
             <div class="chatMessages">
+              <div class="typing"></div>
               <!-- Loop this for chat messages -->
               <!-- loop end -->
             </div>
-            <p class="#typing"></p>
+            <div class="typing"></div>
             <div class="typePanel">
               <input
                 type="text"
@@ -165,6 +183,7 @@
             </div>
           </div>
           <div class="chatUsers">
+            <div id="joined"></div>
             <!-- Loop this for chat users -->
             <div class="userBlock">
               <div class="userPic">

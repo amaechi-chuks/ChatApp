@@ -1,0 +1,28 @@
+{
+    "host": "",
+    "dataBaseUrl": "",
+    "dataBaseKey": "",
+    "fb": {
+        "clientID": "",
+        "clientSecret": "",
+        "callbackURL": "",
+        "profileFields": ["id", "displayName", "photos"]
+    },
+    "twitter": {
+        "consumerKey": "",
+        "consumerSecret": "",
+        "callbackURL": "",
+        "profileFields": ["id", "displayName", "photos"]
+    },
+    "google": {
+        "clientID":"",
+        "clientSecret":"",
+        "callbackURL": "",
+        "profileFields": ["id", "displayName", "photos"]
+    },
+    "redis":{
+        "host": "1",
+        "port": "",
+        "password": ""
+    }
+}

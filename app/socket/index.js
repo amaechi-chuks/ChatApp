@@ -18,9 +18,6 @@ module.exports = (io, app) => {
           roomID: ultility.generateRoomId(),
           users: []
         });
-        // //Save a room to dataBase
-        // ultility.createNewRoom(newRooms);
-        //Emit the updated list
         socket.emit("chatRoomsList", JSON.stringify(allrooms));
 
         //Emit a realtime updated list
@@ -35,25 +32,21 @@ module.exports = (io, app) => {
         // Update the list of active users as shown on the chatroom page
         socket.broadcast.to(data.roomID).emit('updateUsersList', JSON.stringify(usersList.users));
         socket.emit('updateUsersList', JSON.stringify(usersList.users));
+        socket.broadcast.emit('displays', data);
     });
     // Disconnect user from rooms
     socket.on('disconnect', ()=>{
+      const {user} = socket;
       let room = ultility.removeUserFromRoom(allrooms, socket);
-      socket.broadcast.to(room.roomID).emit('updateUsersList', JSON.stringify(room.users))
+      socket.broadcast.to(room.roomID).emit('updateUsersList', JSON.stringify(room.users));
+      socket.broadcast.emit('userLeft', data);
     });
     socket.on('message', data =>{
      socket.to(data.roomID).emit('inMessage', JSON.stringify(data));
     });
     socket.on('typing', (data)=>{
-      if(data.typing==true){
-        socket.broadcast.to(data.roomID).emit('display', JSON.stringify(data));
-        socket.emit('display', JSON.stringify(data))
-      }
-      else{
-        socket.emit('display', JSON.stringify(data))
-      }
-        
-    })
+      socket.broadcast.emit('display', data);
+    });
 });
 };
 

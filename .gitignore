@@ -6,3 +6,4 @@ node_modules/
 chatAppErrorLog.log
 #Development config file
 app/development.json
+
